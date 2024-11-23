@@ -31,6 +31,7 @@ const deleteProduct = async (id: any) => {
   const result = await BikeModel.findOneAndDelete(id);
   return result;
 };
+
 export const bikeService = {
   createProducInDb,
   findall,

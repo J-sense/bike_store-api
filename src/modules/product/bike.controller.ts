@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import { bikeService } from './bike.service';
-import { BikeModel } from './bike.modal';
+// import { BikeModel } from './bike.modal';
 
 const createBike = async (req: Request, res: Response) => {
   try {
@@ -101,6 +101,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const bikeController = {
   createBike,
   findall,

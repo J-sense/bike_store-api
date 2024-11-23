@@ -16,7 +16,7 @@ const createOrder = async (
 
   bike.quantity -= quantity;
   if (bike.quantity === 0) {
-    bike.inStock = false; // Mark as out of stock
+    bike.inStock = false;
   }
   await bike.save();
   const totalPrice = bike.price * quantity;
@@ -27,11 +27,32 @@ const createOrder = async (
     quantity,
     totalPrice,
   });
-  await newOrder.save(); // Save the order
+  await newOrder.save();
 
   return newOrder;
 };
 
+const calculateRevenue = async () => {
+  const stats = await Ordermodel.aggregate([
+    {
+      $group: {
+        _id: null,
+        totalRevenue: { $sum: '$totalPrice' },
+        totalOrders: { $sum: 1 },
+        avgRevenuePerOrder: { $avg: '$totalPrice' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        totalRevenue: 1,
+      },
+    },
+  ]);
+  return stats[0] || { totalRevenue: 0 };
+};
+
 export const orderService = {
   createOrder,
+  calculateRevenue,
 };

@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import app from "./app";
-import config from "./config";
+import mongoose from 'mongoose';
+import app from './app';
+import config from './config';
 // const port = process.env.PORT || 5000;
 main().catch((err) => console.log(err));
 

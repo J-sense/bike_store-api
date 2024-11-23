@@ -1,5 +1,5 @@
 import { Document, Types } from 'mongoose';
-import { Schema, model, connect } from 'mongoose';
+// import { Schema, model, connect } from 'mongoose';
 
 export interface IOrder extends Document {
   email: string;
