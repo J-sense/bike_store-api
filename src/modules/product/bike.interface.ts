@@ -8,3 +8,7 @@ export interface IBike {
   quantity: number;
   inStock: boolean;
 }
+export interface updateProduct {
+  quantity: number;
+  price: number;
+}

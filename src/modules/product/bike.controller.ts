@@ -82,8 +82,28 @@ const updateProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const result = await bikeService.deleteProduct(id);
+    res.status(200).json({
+      message: 'Bike Deleted Successfully',
+      success: true,
+      data: {},
+    });
+  } catch (error: any) {
+    res.status(200).json({
+      message: error.message,
+      success: true,
+      data: false,
+    });
+  }
+};
 export const bikeController = {
   createBike,
   findall,
   updateProduct,
+  deleteProduct,
 };

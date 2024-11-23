@@ -2,6 +2,11 @@ import { model, Schema } from 'mongoose';
 import { IBike } from './bike.interface';
 
 const bikeSchema = new Schema<IBike>({
+  // id: {
+  //   type: String,
+  //   require: true,
+  //   unique: true,
+  // },
   name: {
     type: String,
     required: [true, 'Bike name is required'],
