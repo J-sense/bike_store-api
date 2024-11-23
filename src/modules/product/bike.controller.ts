@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 import { bikeService } from './bike.service';
+import { BikeModel } from './bike.modal';
 
 const createBike = async (req: Request, res: Response) => {
   try {
@@ -37,7 +38,52 @@ const findall = async (req: Request, res: Response) => {
   }
 };
 
+const findOneProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const result = await bikeService.getoneproudct(id);
+
+    if (!result) {
+      return res.status(404).json({
+        message: 'Product not found.',
+        success: false,
+      });
+    }
+
+    res.status(200).json({
+      message: 'Product retrieved successfully.',
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      message: 'An unexpected error occurred while retrieving the product.',
+      success: false,
+      error: error.message || 'Unknown error',
+    });
+  }
+};
+
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const data = req.body;
+    const result = await bikeService.updateProduct(id, data);
+    res.status(200).json({
+      message: 'Product updated successfully.',
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(200).json({
+      message: 'Failed to update product price and quantity.',
+      success: true,
+      data: error.message,
+    });
+  }
+};
 export const bikeController = {
   createBike,
   findall,
+  updateProduct,
 };

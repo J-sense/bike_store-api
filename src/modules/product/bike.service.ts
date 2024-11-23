@@ -10,7 +10,25 @@ const findall = async () => {
   return result;
 };
 
+const getoneproudct = async (id: string) => {
+  const result = await BikeModel.findOne({ id });
+  return result;
+};
+const updateProduct = async (product: any, data: any) => {
+  const { price, quantity } = data;
+  const result = await BikeModel.findByIdAndUpdate(
+    product,
+    {
+      price,
+      quantity,
+    },
+    { new: true },
+  );
+  return result;
+};
 export const bikeService = {
   createProducInDb,
   findall,
+  getoneproudct,
+  updateProduct,
 };
