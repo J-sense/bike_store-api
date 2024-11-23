@@ -106,4 +106,5 @@ export const bikeController = {
   findall,
   updateProduct,
   deleteProduct,
+  findOneProduct,
 };
