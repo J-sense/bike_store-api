@@ -11,10 +11,10 @@ const findall = async () => {
 };
 
 const getoneproudct = async (id: string) => {
-  const result = await BikeModel.findOne({ id });
+  const result = await BikeModel.findOne({ _id: id });
   return result;
 };
-const updateProduct = async (product: any, data: IBike) => {
+const updateProduct = async (product: unknown, data: IBike) => {
   const { price, quantity } = data;
   const result = await BikeModel.findByIdAndUpdate(
     product,
@@ -27,8 +27,8 @@ const updateProduct = async (product: any, data: IBike) => {
   return result;
 };
 
-const deleteProduct = async (id: any) => {
-  const result = await BikeModel.findOneAndDelete(id);
+const deleteProduct = async (id: string) => {
+  const result = await BikeModel.findOneAndDelete({ _id: id });
   return result;
 };
 
