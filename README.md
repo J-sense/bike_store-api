@@ -8,8 +8,8 @@ A modern bike store web application built with Node.js, Express, and MongoDB, pr
 
 ### **Product Management**
 
-- Add, view, update, and delete bike details.
-- Search for bikes by name or filter by category.
+- Add, view, update,get single product and delete bike details.
+- Placed order and calculate revenue.
 
 ### **Real-time Validation**
 
