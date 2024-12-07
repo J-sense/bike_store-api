@@ -38,11 +38,11 @@ A modern bike store web application built with Node.js, Express, and MongoDB, pr
 
 | Method | Endpoint                 | Description               |
 | ------ | ------------------------ | ------------------------- |
-| GET    | `/api/product`          | Fetch all products        |
-| GET    | `/api/product/:id`      | Fetch a product by ID     |
-| POST   | `/api/product`          | Create a new product      |
-| PUT    | `/api/product/:id`      | Update a product by ID    |
-| DELETE | `/api/product/:id`      | Delete a product by ID    |
+| GET    | `/api/products`          | Fetch all products        |
+| GET    | `/api/products/:id`      | Fetch a product by ID     |
+| POST   | `/api/products`          | Create a new product      |
+| PATCH  | `/api/products/:id`      | Update a product by ID    |
+| DELETE | `/api/products/:id`      | Delete a product by ID    |
 | POST   | `/api/orders/:productId` | For placed a order        |
 | GET    | `/api/orders/revenue`    | To view the total revenue |
 
