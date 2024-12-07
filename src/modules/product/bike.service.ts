@@ -5,8 +5,17 @@ const createProducInDb = async (product: IBike) => {
   const result = await BikeModel.create(product);
   return result;
 };
-const findall = async () => {
-  const result = await BikeModel.find();
+const findall = async (query: Record<string, unknown>) => {
+  let searchTerm = '';
+  console.log(searchTerm);
+  if (query?.searchTerm) {
+    searchTerm = query?.searchTerm as string;
+  }
+  const result = await BikeModel.find({
+    $or: ['name', 'brand'].map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
   return result;
 };
 
