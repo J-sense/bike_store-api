@@ -54,6 +54,6 @@ For any inquiries or collaboration, reach out:
 
 - **Email**: jishan1873@gmail.com
 - **GitHub**: [your-username](https://github.com/j-sense/)
-- **GitHub**: [LIVE LINK](https://bike-store-api.vercel.app/)
+- **Project**: [LIVE LINK](https://bike-store-api.vercel.app/)
 
 ---
