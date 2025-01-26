@@ -4,7 +4,7 @@ import { bikeService } from './bike.service';
 
 const createBike = async (req: Request, res: Response) => {
   try {
-    const product = req.body.data;
+    const product = req.body;
 
     const result = await bikeService.createProducInDb(product);
     res.status(200).json({
