@@ -22,7 +22,7 @@ const customerSchema = new Schema<TUser>(
     },
     role: {
       type: String,
-      enum: ['user', 'customer'],
+      enum: ['admin', 'customer'],
       default: 'customer',
     },
   },
