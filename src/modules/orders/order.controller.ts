@@ -1,25 +1,42 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { orderService } from './order.service';
 
 // const orderService = require('../services/orderService');
 
-const createOrder = async (req: Request, res: Response) => {
+// const createOrder = async (req: Request, res: Response) => {
+//   try {
+//     const { email, product, quantity } = req.body;
+
+//     // Call the order service to handle order creation and stock update
+//     const order = await orderService.createOrder(email, product, quantity);
+
+//     // Return success response with the created order
+//     res.status(201).json({
+//       message: 'Order placed successfully!',
+//       order,
+//     });
+//   } catch (error) {
+//     // Return error response
+//     res.status(400).json({
+//       message: (error as Error).message || 'Error while placing the order',
+//     });
+//   }
+// };
+
+const createOrderController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const { email, product, quantity } = req.body;
-
-    // Call the order service to handle order creation and stock update
-    const order = await orderService.createOrder(email, product, quantity);
-
-    // Return success response with the created order
+    const order = await orderService.orderCreate(req.body);
     res.status(201).json({
-      message: 'Order placed successfully!',
-      order,
+      message: 'Orders successfully',
+      success: true,
+      data: order,
     });
   } catch (error) {
-    // Return error response
-    res.status(400).json({
-      message: (error as Error).message || 'Error while placing the order',
-    });
+    next(error);
   }
 };
 
@@ -39,6 +56,6 @@ const getRevenue = async (req: Request, res: Response) => {
 };
 
 export const orderController = {
-  createOrder,
   getRevenue,
+  createOrderController,
 };

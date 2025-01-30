@@ -3,7 +3,7 @@ import { bikeController } from './bike.controller';
 import auth from '../../middleware/auth';
 
 const router = express.Router();
-router.post('/products', auth('customer'), bikeController.createBike);
+router.post('/products', auth('admin'), bikeController.createBike);
 router.get('/products', bikeController.findall);
 router.get('/products/:id', bikeController.findOneProduct);
 router.patch('/products/:id', bikeController.updateProduct);

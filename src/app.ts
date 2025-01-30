@@ -9,11 +9,11 @@ import notfound from './middleware/notFound';
 import { userRouts } from './modules/user/user.route';
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use('/api', authRoutes);
 app.use('/api', userRouts);
 app.use('/api', bikeroutes);
-app.use('/api/orders', orderRoutes);
+app.use('/api', orderRoutes);
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
