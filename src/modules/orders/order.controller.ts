@@ -29,7 +29,7 @@ const createOrderController = async (
   next: NextFunction,
 ) => {
   try {
-    const order = await orderService.orderCreate(req.body);
+    const order = await orderService.orderCreate(req.body, req.ip!);
     res.status(201).json({
       message: 'Orders successfully',
       success: true,
@@ -37,6 +37,21 @@ const createOrderController = async (
     });
   } catch (error) {
     next(error);
+  }
+};
+const verifyOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await orderService.verifyPayment(
+      req.query.order_id as string,
+    );
+
+    res.status(200).json({
+      message: 'Order verified successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error); // ✅ Properly handle errors
   }
 };
 
@@ -54,8 +69,25 @@ const getRevenue = async (req: Request, res: Response) => {
     });
   }
 };
-
+const allOrderComtroller = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await orderService.getAllOrder();
+    res.status(201).json({
+      message: 'All order rettrived successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const orderController = {
   getRevenue,
   createOrderController,
+  allOrderComtroller,
+  verifyOrder,
 };

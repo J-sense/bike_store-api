@@ -22,6 +22,20 @@ const orderSchema = new Schema<IOrder>({
     required: true,
     min: [0, 'Total price must be positive'],
   },
+  status: {
+    type: String,
+    enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
+    default: 'Pending',
+  },
+  transaction: {
+    id: String,
+    transactionStatus: String,
+    bank_status: String,
+    sp_code: String,
+    sp_message: String,
+    method: String,
+    date_time: String,
+  },
 });
 
 export const Ordermodel = model('Order', orderSchema);

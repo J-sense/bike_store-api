@@ -14,11 +14,11 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': 'error', // Disallow unused variables
-      'no-unused-expressions': 'error', // Disallow unused expressions
-      'prefer-const': 'error', // Prefer const declarations
-      'no-console': 'warn', // Warn on console usage
-      'no-undef': 'error', // Disallow undefined variables
+      'no-unused-vars': 'error',
+      'no-undef': 'error',
+      'no-unused-expressions': 'error',
+      'prefer-const': 'error',
+      'no-console': 'warn',
     },
   },
   {
