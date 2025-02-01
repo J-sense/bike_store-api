@@ -12,7 +12,7 @@ shurjopay.config(
   config.sp_return_url!,
 );
 
-const makePayment = async (paymentPayload: any): any => {
+const makePayment = async (paymentPayload: any): Promise<any> => {
   return new Promise((resolve, reject) => {
     shurjopay.makePayment(
       paymentPayload,
@@ -32,7 +32,7 @@ const makePayment = async (paymentPayload: any): any => {
 //   );
 //   return paymentResult;
 // };
-const varifyPayment = async (order_id: string): any => {
+const varifyPayment = async (order_id: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     shurjopay.verifyPayment(
       order_id,

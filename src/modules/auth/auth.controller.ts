@@ -26,7 +26,28 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+const changePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    console.log(req.user);
+    const passwordData = req.body; // No need for { ...passwordData }, just use req.body
+    const result = await authService.changePassword(req.user, passwordData);
+
+    res.status(200).json({
+      message: 'Password changed successfully',
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error); // Pass error to Express error handler
+  }
+};
+
 export const authController = {
   register,
   login,
+  changePassword,
 };
