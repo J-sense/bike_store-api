@@ -7,7 +7,7 @@ const createProducInDb = async (product: IBike) => {
 };
 const findall = async (query: Record<string, unknown>) => {
   let searchTerm = '';
-  console.log(searchTerm);
+  // console.log(searchTerm);
   if (query?.searchTerm) {
     searchTerm = query?.searchTerm as string;
   }

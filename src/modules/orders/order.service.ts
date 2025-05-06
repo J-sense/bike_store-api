@@ -1,8 +1,13 @@
+// import { JwtPayload } from 'jsonwebtoken';
+// import { JwtPayload } from 'jsonwebtoken';
 import { BikeModel } from '../product/bike.modal';
-import { User } from '../user/user.model';
-import { IOrder } from './order.interface';
+// import { User } from '../user/user.model';
+// import { IOrder } from './order.interface';
 import { Ordermodel } from './order.model';
 import { orderUtils } from './utilis';
+import { IOrder } from './order.interface';
+import { User } from '../user/user.model';
+// import { IOrder } from './order.interface';
 
 // const createOrder = async (
 //   email: string,
@@ -38,43 +43,62 @@ import { orderUtils } from './utilis';
 //   return newOrder;
 // };
 const orderCreate = async (orderData: IOrder, client_ip: string) => {
-  const { email } = orderData;
-  const isUSerExist = await User.findOne({ email: email });
-  if (!isUSerExist) {
-    throw new Error('User not Exist');
+  const { email, quantity, product } = orderData;
+
+  // Check if user exists
+  const isUserExist = await User.findOne({ email });
+  if (!isUserExist) {
+    throw new Error('User does not exist');
   }
-  const productExist = await BikeModel.findById(orderData.product);
+
+  // Check if product exists
+  const productExist = await BikeModel.findById(product);
   if (!productExist) {
-    throw new Error('Product is not exist');
+    throw new Error('Product does not exist');
   }
-  let totalPrice;
-  if (productExist) {
-    totalPrice = orderData.totalPrice = orderData.quantity * productExist.price;
-  }
-  let result = await Ordermodel.create(orderData);
+
+  // Calculate total price
+  const totalPrice = quantity * (productExist.price || 0);
+
+  // Create order
+  const result = await Ordermodel.create({ ...orderData, totalPrice });
+
+  // Payment payload
   const shorjopayPayload = {
     amount: totalPrice,
     order_id: result._id,
     currency: 'BDT',
     customer_name: 'N/A',
     customer_address: 'N/A',
-    customer_email: 'N/A',
+    customer_email: email || 'N/A',
     customer_phone: 'N/A',
     customer_city: 'N/A',
     client_ip,
   };
+
+  // Make payment
   const payment = await orderUtils.makePayment(shorjopayPayload);
+
+  // If payment is successful, update the order with transaction details
   if (payment?.transactionStatus) {
-    result = await Ordermodel.updateOne({
-      transaction: {
-        id: payment.sp_order_id,
-        transactionStatus: payment.transactionStatus,
+    await Ordermodel.findByIdAndUpdate(
+      result._id,
+      {
+        $set: {
+          transaction: {
+            id: payment.sp_order_id,
+            transactionStatus: payment.transactionStatus,
+          },
+        },
       },
-    });
+      { new: true },
+    );
   }
 
+  // ✅ Return the checkout URL for redirection
   return payment.checkout_url;
 };
+
 const verifyPayment = async (order_id: string) => {
   try {
     const verifiedPayment = await orderUtils.varifyPayment(order_id);
@@ -104,7 +128,6 @@ const verifyPayment = async (order_id: string) => {
     }
     return verifiedPayment; // ✅ Return the API response
   } catch (error) {
-    console.error('Payment verification failed:', error);
     throw error; // ✅ Properly throw errors
   }
 };
@@ -131,9 +154,19 @@ const getAllOrder = async () => {
   const result = await Ordermodel.find();
   return result;
 };
+const yourOrders = async (id: string) => {
+  const user = await User.findById(id);
+  if (!user) {
+    throw new Error('User not exist');
+  }
+  const result = await Ordermodel.find({ email: user.email });
+
+  return result;
+};
 export const orderService = {
   orderCreate,
   calculateRevenue,
   getAllOrder,
   verifyPayment,
+  yourOrders,
 };

@@ -26,14 +26,31 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
-const changePassword = async (
+const allUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await authService.alluser();
+    res.status(201).json({
+      success: true,
+      message: 'All user retrieved successfully',
+
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const changePassword = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    console.log(req.user);
-    const passwordData = req.body; // No need for { ...passwordData }, just use req.body
+    // Ensure user is authenticated
+    if (!req.user) {
+      throw new Error('You are anuathourized');
+    }
+
+    const passwordData = req.body; // Extract oldPassword & newPassword from req.body
     const result = await authService.changePassword(req.user, passwordData);
 
     res.status(200).json({
@@ -50,4 +67,5 @@ export const authController = {
   register,
   login,
   changePassword,
+  allUser,
 };

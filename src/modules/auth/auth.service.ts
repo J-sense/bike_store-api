@@ -9,11 +9,16 @@ const register = (payload: TUser) => {
   const result = User.create(payload);
   return result;
 };
+const alluser = async () => {
+  const result = await User.find();
+  return result;
+};
 const login = async (payload: TUser) => {
   const isUserExist = await User.findOne({ email: payload.email });
   if (!isUserExist) {
     throw new Error('User Not Exist!');
   }
+
   const isPasswordMatch = await bcrypt.compare(
     payload.password,
     isUserExist?.password,
@@ -67,4 +72,5 @@ export const authService = {
   register,
   login,
   changePassword,
+  alluser,
 };

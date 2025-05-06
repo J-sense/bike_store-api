@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-undef */
+ 
 import Shurjopay from 'shurjopay';
 import config from '../../config';
 // import config from '../../config';

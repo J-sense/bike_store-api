@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { orderService } from './order.service';
+// import { JwtPayload } from 'jsonwebtoken';
 
 // const orderService = require('../services/orderService');
 
@@ -23,12 +24,29 @@ import { orderService } from './order.service';
 //   }
 // };
 
+const yourOrders = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // const user = req.user;
+
+    const userId = req.user.userId;
+    // console.log(userId);
+    const order = await orderService.yourOrders(userId);
+    res.status(201).json({
+      message: 'Orders rettrived successfully',
+      success: true,
+      data: order,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 const createOrderController = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
+    // const user = req.user;
     const order = await orderService.orderCreate(req.body, req.ip!);
     res.status(201).json({
       message: 'Orders successfully',
@@ -90,4 +108,5 @@ export const orderController = {
   createOrderController,
   allOrderComtroller,
   verifyOrder,
+  yourOrders,
 };

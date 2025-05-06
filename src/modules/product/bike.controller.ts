@@ -22,7 +22,7 @@ const createBike = async (req: Request, res: Response) => {
 };
 const findall = async (req: Request, res: Response) => {
   try {
-    console.log(req.query);
+    // console.log(req.query);
     const result = await bikeService.findall(req.query);
     res.status(200).json({
       message: 'Products retrieved successfully',
@@ -37,6 +37,7 @@ const findall = async (req: Request, res: Response) => {
     });
   }
 };
+
 const findOneProduct = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;

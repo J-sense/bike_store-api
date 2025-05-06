@@ -13,6 +13,11 @@ router.post(
 router.post(
   '/auth/login',
   //   validateMiddleware(userValidation.userValidationSchema),
+  authController.allUser,
+);
+router.get(
+  '/auth/all',
+  //   validateMiddleware(userValidation.userValidationSchema),
   authController.login,
 );
 router.post(

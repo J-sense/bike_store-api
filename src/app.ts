@@ -9,7 +9,11 @@ import notfound from './middleware/notFound';
 import { userRouts } from './modules/user/user.route';
 
 app.use(express.json());
-app.use(cors({ origin: '*' }));
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://bike-store-kappa.vercel.app'],
+  }),
+);
 app.use('/api', authRoutes);
 app.use('/api', userRouts);
 app.use('/api', bikeroutes);
